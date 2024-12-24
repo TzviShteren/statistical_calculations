@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadliest Attack Types</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deadliest Attack Types</h1>
+        <form id="attack-form">
+            <label>
+                <input type="checkbox" id="top_5" name="top_5"> Show Top 5 Only
+            </label>
+            <button type="submit">Get Chart</button>
+        </form>
+        <div id="chart-container">
+            <p>Click the button to view the chart.</p>
+        </div>
+        <img id="image-enosh" src="" alt="" style="display: none;">
+        <button id="tzvi" onclick="alertos()">Tzvi</button>
+        <img id="image-tzvi" src="" alt="" style="display: none;">
+
+    </div>
+
+    <script>
+        const form = document.getElementById('attack-form');
+        const chartContainer = document.getElementById('chart-container');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const top5Checked = document.getElementById('top_5').checked;
+            const url = `/the_deadliest_attack_types?top_5=${top5Checked}`;
+
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const imgURL = URL.createObjectURL(blob);
+
+                    chartContainer.innerHTML = `<img src="${imgURL}" alt="Deadliest Attack Types Chart">`;
+                } else {
+                    chartContainer.innerHTML = `<p>Error: Unable to fetch chart.</p>`;
+                }
+            } catch (error) {
+                chartContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        });
+    </script>
+    <script src="./index.js"></script>
+</body>
+</html>
