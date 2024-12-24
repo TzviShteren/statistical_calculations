@@ -98,13 +98,11 @@ def events_casualties_map_endpoint():
 
         # Calculate correlation and get data
         result = events_vs_casualties_correlation(region=region)
-
         if "error" in result:
             return jsonify(result), 400
 
-        # Generate the map
+        # Generate the map with markers
         map_data = result['data']
-
         correlation_map = generate_correlation_map(map_data)
 
         # Save map to HTML file

@@ -34,8 +34,10 @@ def casualties_with_event_coords(top_5: bool = False):
     df['latitude'] = df['location'].apply(lambda x: x.get('latitude') if isinstance(x, dict) else None)
     df['longitude'] = df['location'].apply(lambda x: x.get('longitude') if isinstance(x, dict) else None)
 
-    df['num_killed'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_killed', 0)), errors='coerce').fillna(0)
-    df['num_wounded'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_wounded', 0)), errors='coerce').fillna(0)
+    df['num_killed'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_killed', 0)), errors='coerce').fillna(
+        0)
+    df['num_wounded'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_wounded', 0)),
+                                      errors='coerce').fillna(0)
 
     df['casualty_points'] = (df['num_killed'] * 2) + df['num_wounded']
 
@@ -115,7 +117,6 @@ def attack_frequency_trends(year_filter=None):
     }
 
 
-
 # Question number 10
 def events_vs_casualties_correlation(region: str = None):
     data = list(get_collection().find({}))
@@ -130,8 +131,10 @@ def events_vs_casualties_correlation(region: str = None):
     df = df.dropna(subset=['latitude', 'longitude'])
 
     # Convert casualties to numeric
-    df['num_killed'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_killed', 0)), errors='coerce').fillna(0)
-    df['num_wounded'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_wounded', 0)), errors='coerce').fillna(0)
+    df['num_killed'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_killed', 0)), errors='coerce').fillna(
+        0)
+    df['num_wounded'] = pd.to_numeric(df['casualties'].apply(lambda x: x.get('num_wounded', 0)),
+                                      errors='coerce').fillna(0)
 
     # Calculate casualty points (weighted sum)
     df['casualty_points'] = (df['num_killed'] * 2) + df['num_wounded']
